@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api/private
+
+Sitemap: https://www.davidbudhamagar.com.np/sitemap.xml
+
