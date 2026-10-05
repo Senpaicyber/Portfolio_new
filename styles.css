@@ -80,8 +80,13 @@ button {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(8, 11, 17, 0.83);
-  backdrop-filter: blur(20px);
+  background: rgba(8, 11, 17, 0.92);
+  backdrop-filter: blur(10px);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header {
+    background: rgba(8, 11, 17, 0.98);
+  }
 }
 .brand {
   display: flex;
@@ -3424,17 +3429,6 @@ body:has(> main .hero):after,
     border-color 0.25s,
     box-shadow 0.25s;
 }
-.scroll-depth-ready {
-  transform: translateY(calc(var(--scroll-depth, 0px) * 0.28)) !important;
-  transition: transform 0.14s linear;
-}
-.scroll-depth-ready.hero,
-.scroll-depth-ready.status-strip,
-.scroll-depth-ready.security-note,
-.scroll-depth-ready.arcade-teaser,
-.scroll-depth-ready.contact-section {
-  transform: translateY(calc(var(--scroll-depth, 0px) * 0.28)) !important;
-}
 .profile-card:hover,
 .timeline-card:hover,
 .project-card:hover,
@@ -3458,10 +3452,6 @@ body:has(> main .hero):after,
   }
   .status-label {
     font-size: 9px;
-  }
-  .scroll-depth-ready {
-    transform: none !important;
-    transition: none !important;
   }
 }
 
@@ -3605,11 +3595,6 @@ main .credential-list:hover,
 main .education-card:hover {
   transform: none !important;
 }
-.scroll-depth-ready {
-  transform: none !important;
-  perspective: none !important;
-}
-
 /* Shared keyboard focus and compact-page navigation fixes */
 :where(a, button, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--cyan);
