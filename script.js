@@ -24,6 +24,83 @@
     }),
   );
 
+  const projectInfo = {
+    ids: [
+      "01 / NETWORK SECURITY",
+      "Signature-Based Intrusion Detection System",
+      "A web-based learning project exploring how signature matching and network telemetry can help surface suspicious activity for analyst review.",
+      [
+        "Detection areas explored: port scans, connection floods, and suspicious traffic patterns.",
+        "Built around Python and web-based monitoring components.",
+        "Project concepts include alerting, response workflows, and security intelligence context.",
+        "Detection output should be validated in a controlled environment; no accuracy guarantees are implied.",
+      ],
+    ],
+    sql: [
+      "02 / WEB APPLICATION SECURITY",
+      "SQL Injection Security Lab",
+      "A practical lab for understanding injection risks and the coding patterns that help prevent them.",
+      [
+        "Explores common SQL injection concepts in a safe lab context.",
+        "Demonstrates parameterized query patterns and input handling.",
+        "Connects implementation choices to OWASP web security guidance.",
+      ],
+    ],
+    crypto: [
+      "03 / CRYPTOGRAPHY RESEARCH",
+      "Cryptographic Algorithm Research",
+      "An academic exploration of cipher design and layered encryption, focused on understanding properties and tradeoffs.",
+      [
+        "Studies cryptographic concepts and layered approaches.",
+        "Reviews design considerations, key handling, and security tradeoffs.",
+        "Presented as academic research rather than a claim of novel, validated cryptography.",
+      ],
+    ],
+    lpg: [
+      "04 / EMBEDDED SYSTEMS",
+      "LPG Gas Detection System",
+      "An IoT prototype combining a NodeMCU and gas sensor to monitor readings and support local alerting.",
+      [
+        "Integrates a microcontroller with gas-sensing hardware.",
+        "Explores real-time readings and threshold-based alerting.",
+        "Considers reliability and security in a connected embedded device.",
+      ],
+    ],
+    risk: [
+      "05 / RISK MANAGEMENT",
+      "Risk Management: NVIDIA Data Breach",
+      "A case study examining breach impact, security controls, mitigation strategies, and risk management frameworks.",
+      [
+        "Maps reported incident context to business and security impact.",
+        "Reviews relevant control and response considerations.",
+        "Discusses mitigation strategies and security framework alignment.",
+      ],
+    ],
+  };
+  const dialog = document.querySelector(".project-dialog");
+  document.querySelectorAll(".project-open").forEach((button) =>
+    button.addEventListener("click", () => {
+      const data = projectInfo[button.dataset.project];
+      if (!data || !dialog) return;
+      document.querySelector("#dialog-kicker").textContent = data[0];
+      document.querySelector("#dialog-title").textContent = data[1];
+      document.querySelector("#dialog-description").textContent = data[2];
+      const list = document.createElement("ul");
+      data[3].forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.append(li);
+      });
+      const content = document.querySelector(".dialog-content");
+      content.replaceChildren(list);
+      dialog.showModal();
+    }),
+  );
+  document.querySelector(".dialog-close")?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const revealObserver =
     "IntersectionObserver" in window
@@ -48,6 +125,35 @@
       if (reducedMotion || !revealObserver) el.classList.add("visible");
       else revealObserver.observe(el);
     });
+
+  const scrollSections = [
+    ...document.querySelectorAll(
+      "main > .hero, main > .status-strip, main > .section, main > .expertise-section, main > .security-note, main > .arcade-teaser, main > .contact-section",
+    ),
+  ];
+  const scrollMotionAllowed =
+    !reducedMotion && matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (scrollMotionAllowed && scrollSections.length) {
+    let scrollFrame = 0;
+    const updateSectionDepth = () => {
+      const viewportMid = window.innerHeight * 0.5;
+      scrollSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionMid = rect.top + rect.height * 0.5;
+        const distance = (sectionMid - viewportMid) / Math.max(viewportMid + rect.height * 0.5, 1);
+        const progress = Math.max(-1, Math.min(1, distance));
+        section.style.setProperty("--scroll-depth", `${(Math.abs(progress) * 20).toFixed(1)}px`);
+        section.classList.add("scroll-depth-ready");
+      });
+      scrollFrame = 0;
+    };
+    const scheduleSectionDepth = () => {
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(updateSectionDepth);
+    };
+    window.addEventListener("scroll", scheduleSectionDepth, { passive: true });
+    window.addEventListener("resize", scheduleSectionDepth, { passive: true });
+    updateSectionDepth();
+  }
 
   const canvas = document.querySelector("#network");
   const context = canvas?.getContext("2d", { alpha: true });

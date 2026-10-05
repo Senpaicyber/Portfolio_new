@@ -206,24 +206,15 @@
     let shuffledOptions = [];
     let lastCorrectPosition = -1;
     function shuffleAnswers() {
-      shuffledOptions = challenge.options.map((text, originalIndex) => ({ text, originalIndex }));
-      for (let i = shuffledOptions.length - 1; i > 0; i--) {
-        const swapIndex = Math.floor(Math.random() * (i + 1));
-        [shuffledOptions[i], shuffledOptions[swapIndex]] = [
-          shuffledOptions[swapIndex],
-          shuffledOptions[i],
-        ];
-      }
+      const makeOrder = () =>
+        challenge.options
+          .map((text, originalIndex) => ({ text, originalIndex, key: Math.random() }))
+          .sort((a, b) => a.key - b.key);
+      shuffledOptions = makeOrder();
       let position = shuffledOptions.findIndex((item) => item.originalIndex === challenge.answer);
-      if (position === lastCorrectPosition && challenge.options.length > 1) {
-        const nextPosition =
-          (position + 1 + Math.floor(Math.random() * (challenge.options.length - 1))) %
-          challenge.options.length;
-        [shuffledOptions[position], shuffledOptions[nextPosition]] = [
-          shuffledOptions[nextPosition],
-          shuffledOptions[position],
-        ];
-        position = nextPosition;
+      while (position === lastCorrectPosition && challenge.options.length > 1) {
+        shuffledOptions = makeOrder();
+        position = shuffledOptions.findIndex((item) => item.originalIndex === challenge.answer);
       }
       lastCorrectPosition = position;
     }
@@ -259,8 +250,6 @@
             mark.textContent = "✓";
           } else {
             streak = 0;
-            status.textContent = "RETRY AVAILABLE";
-            status.classList.remove("done");
             button.classList.add("incorrect");
             mark.textContent = "×";
             feedback.textContent = `Not quite. The best choice was ${String.fromCharCode(65 + shuffledOptions.findIndex((item) => item.originalIndex === challenge.answer))}. ${challenge.explanation}`;
@@ -271,7 +260,6 @@
             retry.textContent = "Try again with shuffled answers";
             retry.addEventListener("click", () => {
               delete card.dataset.answered;
-              status.textContent = "READY";
               feedback.textContent = "";
               feedback.className = "challenge-feedback";
               renderAnswers();
