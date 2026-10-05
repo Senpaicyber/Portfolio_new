@@ -101,3 +101,12 @@ main .hero-visual:after{transform:none!important}
 main .core-wrap{transform:translate(-50%,-50%)!important}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 
+/* Small requested alignment and status details. */
+.team-icon{display:grid;place-items:center;line-height:1}
+.team-icon span{display:block;line-height:1;transform:translate(-1px,1px)}
+.timeline-item.current-role .timeline-marker i{background:#59d98e;border-color:#59d98e;box-shadow:0 0 12px rgba(89,217,142,.55)}
+main .visual-caption{justify-content:space-between;text-align:left;gap:12px}
+main .visual-caption span{white-space:nowrap}
+main .visual-caption span:last-child{text-align:right}
+@media(max-width:420px){main .visual-caption{gap:6px;padding-left:6px;padding-right:6px}main .visual-caption .caption-kicker{font-size:7px;letter-spacing:.7px}main .visual-caption span:last-child{font-size:7px}}
+
