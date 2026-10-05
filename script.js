@@ -126,35 +126,6 @@
       else revealObserver.observe(el);
     });
 
-  const scrollSections = [
-    ...document.querySelectorAll(
-      "main > .hero, main > .status-strip, main > .section, main > .expertise-section, main > .security-note, main > .arcade-teaser, main > .contact-section",
-    ),
-  ];
-  const scrollMotionAllowed =
-    !reducedMotion && matchMedia("(hover: hover) and (pointer: fine)").matches;
-  if (scrollMotionAllowed && scrollSections.length) {
-    let scrollFrame = 0;
-    const updateSectionDepth = () => {
-      const viewportMid = window.innerHeight * 0.5;
-      scrollSections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionMid = rect.top + rect.height * 0.5;
-        const distance = (sectionMid - viewportMid) / Math.max(viewportMid + rect.height * 0.5, 1);
-        const progress = Math.max(-1, Math.min(1, distance));
-        section.style.setProperty("--scroll-depth", `${(Math.abs(progress) * 20).toFixed(1)}px`);
-        section.classList.add("scroll-depth-ready");
-      });
-      scrollFrame = 0;
-    };
-    const scheduleSectionDepth = () => {
-      if (!scrollFrame) scrollFrame = requestAnimationFrame(updateSectionDepth);
-    };
-    window.addEventListener("scroll", scheduleSectionDepth, { passive: true });
-    window.addEventListener("resize", scheduleSectionDepth, { passive: true });
-    updateSectionDepth();
-  }
-
   const canvas = document.querySelector("#network");
   const context = canvas?.getContext("2d", { alpha: true });
   if (!canvas || !context) return;
@@ -162,10 +133,13 @@
   let width = 0,
     height = 0,
     frame = 0,
+    lastFrameTime = 0,
+    visualVisible = !("IntersectionObserver" in window),
+    pageVisible = !document.hidden,
     pointerX = 0,
     pointerY = 0;
   const mobile = matchMedia("(max-width: 720px)").matches;
-  const count = mobile ? 23 : 42;
+  const count = mobile ? 14 : 28;
   const points = Array.from({ length: count }, (_, index) => {
     const angle = (index / count) * Math.PI * 2;
     const radius = 0.12 + Math.random() * 0.36;
@@ -186,6 +160,13 @@
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function draw(time = 0) {
+    frame = 0;
+    if (!visualVisible || !pageVisible) return;
+    if (!reducedMotion && time - lastFrameTime < 1000 / 30) {
+      frame = requestAnimationFrame(draw);
+      return;
+    }
+    lastFrameTime = time;
     context.clearRect(0, 0, width, height);
     const t = reducedMotion ? 0 : time * 0.00018;
     const coords = points.map((p) => ({
@@ -215,6 +196,33 @@
     });
     if (!reducedMotion) frame = requestAnimationFrame(draw);
   }
+  function startDrawing() {
+    if (reducedMotion && visualVisible && pageVisible) {
+      draw();
+    } else if (visualVisible && pageVisible && !frame) {
+      frame = requestAnimationFrame(draw);
+    }
+  }
+  function stopDrawing() {
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+  }
+  if ("IntersectionObserver" in window) {
+    const canvasObserver = new IntersectionObserver(
+      ([entry]) => {
+        visualVisible = entry.isIntersecting;
+        if (visualVisible) startDrawing();
+        else stopDrawing();
+      },
+      { rootMargin: "80px" },
+    );
+    canvasObserver.observe(visual);
+  }
+  document.addEventListener("visibilitychange", () => {
+    pageVisible = !document.hidden;
+    if (pageVisible) startDrawing();
+    else stopDrawing();
+  });
   visual.addEventListener("pointermove", (event) => {
     const rect = visual.getBoundingClientRect();
     pointerX = ((event.clientX - rect.left) / width - 0.5) * 2;
@@ -227,14 +235,13 @@
   window.addEventListener(
     "resize",
     () => {
-      cancelAnimationFrame(frame);
       resize();
-      if (!reducedMotion) draw();
-      else draw();
+      lastFrameTime = 0;
+      startDrawing();
     },
     { passive: true },
   );
   resize();
-  draw();
+  startDrawing();
 })();
 
