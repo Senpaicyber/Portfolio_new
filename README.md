@@ -8,9 +8,9 @@ Open `index.html` directly, or serve this directory with any static web server. 
 
 ## Before publishing
 
-- Confirm the contact email, experience wording, qualification, and credential names against primary records.
-- Add verified LinkedIn and GitHub profile URLs, credential verification URLs and years, and the actual CV PDF if you want a download action.
-- The GitHub and LinkedIn links now point to the supplied profiles. Project cards link to the matching public repositories; review their README files for exact scope and capabilities.
+- Confirm experience wording, qualification, and credential names against primary records.
+- Add credential verification URLs and years, and the actual CV PDF if you want a download action.
+- The GitHub and LinkedIn links point to the supplied profiles. Project cards link to the listed repositories; review their README files for exact scope and capabilities.
 - Configure hosting-level HTTPS, security headers, request controls, and logging as appropriate for the selected host.
 - Update the canonical domain and sitemap if deployment uses another origin.
 
@@ -22,7 +22,7 @@ This repository is a static public portfolio. It does not collect data through a
 
 ## Files
 
-- `index.html` — portfolio landing page and project dialog
+- `index.html` — portfolio landing page and project links
 - `styles.css` — responsive design system, layouts, animation, reduced-motion rules
 - `script.js` — navigation, disclosure controls, project details, canvas visualization
 - `security.html` — security philosophy and responsible disclosure
