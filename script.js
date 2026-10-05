@@ -49,21 +49,6 @@
     el.classList.add('reveal'); if (reducedMotion || !revealObserver) el.classList.add('visible'); else revealObserver.observe(el);
   });
 
-  if (!reducedMotion && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    document.querySelectorAll('.profile-card,.timeline-card,.project-card,.skill-card,.credential-list,.education-card').forEach((card) => {
-      card.addEventListener('pointermove', (event) => {
-        const rect = card.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - .5;
-        const y = (event.clientY - rect.top) / rect.height - .5;
-        card.style.setProperty('--tilt-y', `${(x * 3).toFixed(2)}deg`);
-        card.style.setProperty('--tilt-x', `${(-y * 2.3).toFixed(2)}deg`);
-      });
-      card.addEventListener('pointerleave', () => {
-        card.style.setProperty('--tilt-x', '0deg'); card.style.setProperty('--tilt-y', '0deg');
-      });
-    });
-  }
-
   const scrollSections = [...document.querySelectorAll('main > .hero, main > .status-strip, main > .section, main > .expertise-section, main > .security-note, main > .arcade-teaser, main > .contact-section')];
   const scrollMotionAllowed = !reducedMotion && matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (scrollMotionAllowed && scrollSections.length) {
@@ -76,7 +61,6 @@
         const distance = (sectionMid - viewportMid) / Math.max(viewportMid + rect.height * .5, 1);
         const progress = Math.max(-1, Math.min(1, distance));
         section.style.setProperty('--scroll-depth', `${(Math.abs(progress) * 20).toFixed(1)}px`);
-        section.style.setProperty('--scroll-rotate', `${(progress * -1.15).toFixed(2)}deg`);
         section.classList.add('scroll-depth-ready');
       });
       scrollFrame = 0;
