@@ -2466,6 +2466,13 @@ button {
     align-items: flex-start;
     flex-direction: column;
   }
+  .arcade-progress {
+    width: 100%;
+    min-width: 0;
+  }
+  .arcade-progress .progress-track {
+    width: 100%;
+  }
   .arcade-actions {
     width: 100%;
   }
