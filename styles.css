@@ -3695,3 +3695,67 @@ main .visual-caption span:last-child {
   }
 }
 
+
+/* Improve section rhythm and bring supporting copy to a comfortable reading size. */
+.section-heading {
+  margin-bottom: 30px;
+}
+.experience-section {
+  padding-top: 88px;
+}
+.experience-section .timeline {
+  margin-top: 24px;
+}
+main .eyebrow,
+main .timeline-date,
+main .company,
+main .timeline-card > p,
+main .timeline-card summary,
+main .timeline-card .expand-content,
+main .team-note p,
+main .project-body p,
+main .skill-card > p,
+main .credential-row p,
+main .credential-note,
+main .edu-delivery,
+main .education-focus p,
+main .prior-education p,
+main .security-note p,
+main .arcade-teaser p,
+main .contact-inner > p {
+  font-size: 12px;
+}
+main .heading-aside,
+main .timeline-card h3,
+main .credential-row h3,
+main .edu-university {
+  font-size: 13px;
+}
+main .profile-top small,
+main .profile-row b,
+main .profile-row span,
+main .profile-foot,
+main .role-index,
+main .project-tags span,
+main .skill-list span,
+main .credential-type,
+main .education-focus > span,
+main .prior-education > span,
+main .education-date,
+main .contact-socials a,
+main .contact-email,
+main .footer-center,
+main .footer-links {
+  font-size: 11px;
+}
+@media (max-width: 720px) {
+  .section-heading {
+    margin-bottom: 24px;
+  }
+  .experience-section {
+    padding-top: 64px;
+  }
+  .experience-section .timeline {
+    margin-top: 18px;
+  }
+}
