@@ -24,6 +24,7 @@ This repository is a static public portfolio. It does not collect data through a
 
 - `index.html` — portfolio landing page and project links
 - `styles.css` — responsive design system, layouts, animation, reduced-motion rules
+- `og-preview.png` — compressed Open Graph image for link previews
 - `script.js` — navigation, disclosure controls, project details, canvas visualization
 - `security.html` — security philosophy and responsible disclosure
 - `arcade.html` and `arcade.js` — ten fixed, local cybersecurity learning challenges
