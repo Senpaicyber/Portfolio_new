@@ -30,9 +30,9 @@
       "Signature-Based Intrusion Detection System",
       "A web-based learning project exploring how signature matching and network telemetry can help surface suspicious activity for analyst review.",
       [
-        "Detection areas explored: port scans, connection floods, and suspicious traffic patterns.",
+        "Detection areas explored: port scans, connection floods and suspicious traffic patterns.",
         "Built around Python and web-based monitoring components.",
-        "Project concepts include alerting, response workflows, and security intelligence context.",
+        "Project concepts include alerting, response workflows and security intelligence context.",
         "Detection output should be validated in a controlled environment; no accuracy guarantees are implied.",
       ],
     ],
@@ -52,7 +52,7 @@
       "An academic exploration of cipher design and layered encryption, focused on understanding properties and tradeoffs.",
       [
         "Studies cryptographic concepts and layered approaches.",
-        "Reviews design considerations, key handling, and security tradeoffs.",
+        "Reviews design considerations, key handling and security tradeoffs.",
         "Presented as academic research rather than a claim of novel, validated cryptography.",
       ],
     ],
@@ -69,7 +69,7 @@
     risk: [
       "05 / RISK MANAGEMENT",
       "Risk Management: NVIDIA Data Breach",
-      "A case study examining breach impact, security controls, mitigation strategies, and risk management frameworks.",
+      "A case study examining breach impact, security controls, mitigation strategies and risk management frameworks.",
       [
         "Maps reported incident context to business and security impact.",
         "Reviews relevant control and response considerations.",
