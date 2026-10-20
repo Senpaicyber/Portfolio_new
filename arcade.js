@@ -118,7 +118,7 @@
       ],
       answer: 0,
       explanation:
-        "Server-side fetches need destination controls, redirect revalidation, careful DNS/IP handling, and response limits. A scheme check alone is insufficient.",
+        "Server-side fetches need destination controls, redirect revalidation, careful DNS/IP handling and response limits. A scheme check alone is insufficient.",
     },
     {
       title: "Vulnerable dependencies",
@@ -127,7 +127,7 @@
         "A project uses an old dependency with a known security update. What is a sound maintenance step?",
       box: "DEPENDENCY NOTICE\nInstalled: older release\nSecurity fix: available upstream",
       options: [
-        "Review the advisory, update to a supported fixed version, and run relevant checks.",
+        "Review the advisory, update to a supported fixed version and run relevant checks.",
         "Ignore the notice if the site appears to work.",
         "Download a similarly named package from an unknown mirror.",
       ],
@@ -142,7 +142,7 @@
         "A service needs to record failed sign-in events. Which log entry is useful and safer?",
       box: "EVENT: failed authentication\nLOGGING POLICY: under review",
       options: [
-        "Record time, event type, and a suitably minimized account reference; never record the password or session token.",
+        "Record time, event type and a suitably minimized account reference; never record the password or session token.",
         "Record the submitted password to help reproduce the event.",
         "Store the complete authentication cookie with every request.",
       ],
